@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 actions">
+                <p>Documents</p>
+                <table>
+                    <tr>
+                        <td class="col-md-3"><b>Document title</b></td>
+                        <td class="col-md-3">Date Uploaded</td>
+                        <td class="col-md-3"><b>Company</b></td>
+                        <td class="col-md-3"><b>User Name</b></td>
+                    </tr>
+                    {% for doc in documents %}
+                    <tr>
+                        <td class="col-md-3"><a href="{{ doc.doc.url }}" target="_blank">{{ doc.title }}</a></td>
+                        <td class="col-md-3">{{ doc.uploadedon|date('d/m/Y') }}</td>
+                        <td class="col-md-3">{{ doc.company.title }}</td>
+                        <td class="col-md-3">
+                            {{ doc.uploadedby.user.first_name }}
+                            {{ doc.uploadedby.user.last_name }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

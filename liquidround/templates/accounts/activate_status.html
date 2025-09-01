@@ -1,0 +1,10 @@
+{% extends '_base.html' %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block main %}
+    <div class="container register">
+        <h2>Account Confirmed</h2>
+        <p>Your email confirmed and your account is activated. You can now login with your email and password.</p>
+        <p><a href="{{ url('accounts:login') }}">Login</a></p>
+    </div>
+{% endblock main %}

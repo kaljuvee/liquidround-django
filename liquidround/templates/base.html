@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <title>Liquid Round</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- Web Fonts -->
+    <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin'>
+    {% stylesheet 'styles' %}
+    {% block css %}
+        <link rel="stylesheet" href="{{ static('css/page_job.css') }}">
+    {% endblock %}
+</head>
+
+<body>
+
+<div class="wrapper">
+    <!--=== Header ===-->
+    <div class="header">
+        <div class="container">
+            <!-- Logo -->
+            <a class="logo" href="{{ url('statpages:home') }}">
+                <img src="{{ static('images/assets/img/logo1-default.png') }}" alt="Logo">
+            </a>
+            <!-- End Logo -->
+
+            <!-- Topbar -->
+            <div class="topbar">
+                <ul class="loginbar pull-right">
+                {% if request.user.is_authenticated() %}
+                    <li>
+                        <a href="{{ url('accounts:profile') }}"><span class="glyphicon glyphicon-user"></span> {{ request.user.email }}</a>
+                    </li>
+                    {% if request.user.is_staff %}
+                        <li>
+                            <a href="{{ url('admindeck:deck') }}">AdminDeck</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{{ url('accounts:logout') }}">Logout</a>
+                    </li>
+                {% else %}
+                    <li><a href="{{ url('accounts:login') }}">Login</a></li>
+                {% endif %}
+                </ul>
+            </div>
+            <!-- End Topbar -->
+
+            <!-- Toggle get grouped for better mobile display -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="fa fa-bars"></span>
+            </button>
+            <!-- End Toggle -->
+        </div><!--/end container-->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    <li {% if active_app == 'home' %}class="active"{% endif %}>
+                        <a href="{{ url('statpages:home') }}">
+                            Home
+                        </a>
+                    </li>
+                    <li {% if active_app == 'company' %}class="active"{% endif %}>
+                        <a href="{{ url('companies:all') }}">
+                            Market for Shares
+                        </a>
+                    </li>
+                    <!-- Pages -->
+                    <li class="dropdown {% if active_app == 'about' %}active{% endif %}">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                            About
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- About Pages -->
+                            <li>
+                                <a href="{{ url('news:list') }}">News</a>
+                            </li>
+                            {% for page in top_menu %}
+                                <li>
+                                    <a href="{{ url('statpages:page', args=[page.slug]) }}">{{ page.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <!-- End Pages -->
+                    {% if howitworks %}
+                    <li {% if active_app == 'howitworks' %}class="active"{% endif %}>
+                        <a href="{{ url('statpages:page', args=['how-it-works']) }}">
+                            How It Works
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {#<!-- Search Block -->
+                    <li>
+                        <i class="search fa fa-search search-btn"></i>
+                        <div class="search-open">
+                            <div class="input-group animated fadeInDown">
+                                <input type="text" class="form-control" placeholder="Search">
+                                <span class="input-group-btn">
+                                    <button class="btn-u" type="button">Go</button>
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- End Search Block -->#}
+                </ul>
+            </div><!--/end container-->
+        </div><!--/navbar-collapse-->
+    </div>
+    <!--=== End Header ===-->
+
+    {% block slider %}
+    <!--=== Job Img ===-->
+    <div class="job-img margin-bottom-30">
+        <div class="job-banner">
+            <h2>Liquidity | Privacy | Control</h2>
+        </div>
+        {#<div class="job-img-inputs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 md-margin-bottom-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                            <input type="text" placeholder="what job you are looking for" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 md-margin-bottom-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                            <input type="text" placeholder="where would you like to work" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn-u btn-block btn-u-dark"> Search Job</button>
+                    </div>
+                </div>
+            </div>
+        </div>#}
+    </div>
+    <!--=== End Job Img ===-->
+    {% endblock slider %}
+    {% block blurb %}
+    <!--=== Content Part ===-->
+    <div class="container content">
+        <!-- Begin Service Block -->
+        <div class="row margin-bottom-40">
+            <div class="col-md-4 col-sm-6">
+                <div class="service-block service-block-sea service-or">
+                    <div class="service-bg"></div>
+                    <i class="icon-custom icon-color-light rounded-x fa fa-lightbulb-o"></i>
+                    <h2 class="heading-md">Browse</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus id elit mi egetine. Fusce dapibus</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="service-block service-block-red service-or">
+                    <div class="service-bg"></div>
+                    <i class="icon-custom icon-color-light rounded-x icon-line icon-fire"></i>
+                    <h2 class="heading-md">Sell</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus id elit mi egetine usce dapibus elit nondapibus</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="service-block service-block-blue service-or">
+                    <div class="service-bg"></div>
+                    <i class="icon-custom icon-color-light rounded-x icon-line icon-rocket"></i>
+                    <h2 class="heading-md">Invest</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus id elit mi egetine. Fusce dapibus</p>
+                </div>
+            </div>
+        </div>
+        <!-- End Begin Service Block -->
+
+        <!-- Job Content -->
+        <div class="headline"><h2>The UK’s marketplace for shares in private companies – for free!</h2></div>
+        <div class="row job-content margin-bottom-40">
+            <div class="col-md-12 col-sm-3 md-margin-bottom-40">
+                <p><strong>Founded by investors</strong> looking for liquidity, join us to make a platform that will solve one of the foremost problems for investors, employees and managers of private companies.</p>
+                <p>The most important part of LiquidRound is the user. That’s why we’re making it <strong>free to trade</strong> initially, so we know that we are doing all we can to build a fully functioning marketplace that truly brings liquidity to every user.</p>
+            </div>
+        </div>
+        <!-- End Job Content -->
+    {% endblock blurb %}
+
+    {% block main %}
+
+        <div class="headline margin-bottom-35"><h2>Highest Rated Jobs</h2></div>
+
+        <!-- Easy Blocks v1 -->
+        <div class="row high-rated margin-bottom-20">
+            <!-- Easy Block -->
+            <div class="col-md-3 col-sm-6 md-margin-bottom-40">
+                <div class="easy-block-v1">
+                    <div class="easy-block-v1-badge rgba-default">Marketing</div>
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li class="rounded-x active" data-target="#carousel-example-generic" data-slide-to="0"></li>
+                            <li class="rounded-x" data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            <li class="rounded-x" data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img alt="" src="{{ static('images/assets/img/main/img3.jpg') }}">
+                            </div>
+                            <div class="item">
+                                <img alt="" src="{{ static('images/assets/img/main/img1.jpg') }}">
+                            </div>
+                            <div class="item">
+                                <img alt="" src="{{ static('images/assets/img/main/img7.jpg') }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-h">
+                        <h3>Savoy Hotel London</h3>
+                        <div class="star-vote pull-right">
+                            <ul class="list-inline">
+                                <li><i class="color-green fa fa-star"></i></li>
+                                <li><i class="color-green fa fa-star"></i></li>
+                                <li><i class="color-green fa fa-star"></i></li>
+                                <li><i class="color-green fa fa-star-half-o"></i></li>
+                                <li><i class="color-green fa fa-star-o"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><span class="color-green">Position:</span> Manager / Executive</li>
+                        <li><span class="color-green">Required:</span> 5 - years of experience</li>
+                    </ul>
+                    <a class="btn-u btn-u-sm" href="#">View More</a>
+                </div>
+            </div>
+            <!-- End Easy Block -->
+
+            <!-- Easy Block -->
+            <div class="col-md-3 col-sm-6 md-margin-bottom-40">
+                <div class="easy-block-v1">
+                    <div class="easy-block-v1-badge rgba-red">Marketing</div>
+                    <div id="carousel-example-generic-2" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li class="rounded-x active" data-target="#carousel-example-generic-2" data-slide-to="0"></li>
+                            <li class="rounded-x" data-target="#carousel-example-generic-2" data-slide-to="1"></li>
+                            <li class="rounded-x" data-target="#carousel-example-generic-2" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img alt="" src="{{ static('images/assets/img/main/img12.jpg') }}">
+                            </div>
+                            <div class="item">
+                                <img alt="" src="{{ static('images/assets/img/main/img10.jpg') }}">
+                            </div>
+                            <div class="item">
+                                <img alt="" src="{{ static('images/assets/img/main/img21.jpg') }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-h">
+                        <h3>Thomas Cook Holidays</h3>
+                        <ul class="list-inline star-vote">
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star-half-o"></i></li>
+                        </ul>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><span class="color-green">Position:</span> Marketing / Advertising</li>
+                        <li><span class="color-green">Required:</span> 7 - years of experience</li>
+                    </ul>
+                    <a class="btn-u btn-u-sm" href="#">View More</a>
+                </div>
+            </div>
+            <!-- End Easy Block -->
+
+            <!-- Easy Block -->
+            <div class="col-md-3 col-sm-6 md-margin-bottom-40">
+                <div class="easy-block-v1">
+                    <div class="easy-block-v1-badge rgba-blue">Education</div>
+                    <div id="carousel-example-generic-3" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li class="rounded-x active" data-target="#carousel-example-generic-3" data-slide-to="0"></li>
+                            <li class="rounded-x" data-target="#carousel-example-generic-3" data-slide-to="1"></li>
+                            <li class="rounded-x" data-target="#carousel-example-generic-3" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img alt="" src="{{ static('images/assets/img/main/img4.jpg') }}">
+                            </div>
+                            <div class="item">
+                                <img alt="" src="{{ static('images/assets/img/main/img14.jpg') }}">
+                            </div>
+                            <div class="item">
+                                <img alt="" src="{{ static('images/assets/img/main/img8.jpg') }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-h">
+                        <h3>University of Aberdeen</h3>
+                        <ul class="list-inline star-vote">
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star-o"></i></li>
+                            <li><i class="color-green fa fa-star-o"></i></li>
+                        </ul>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><span class="color-green">Position:</span> Education / Training</li>
+                        <li><span class="color-green">Required:</span> 10 - years of experience</li>
+                    </ul>
+                    <a class="btn-u btn-u-sm" href="#">View More</a>
+                </div>
+            </div>
+            <!-- End Easy Block -->
+
+            <!-- Easy Block -->
+            <div class="col-md-3 col-sm-6">
+                <div class="easy-block-v1">
+                    <div class="easy-block-v1-badge rgba-purple">IT Management</div>
+                    <div id="carousel-example-generic-4" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li class="rounded-x active" data-target="#carousel-example-generic-4" data-slide-to="0"></li>
+                            <li class="rounded-x" data-target="#carousel-example-generic-4" data-slide-to="1"></li>
+                            <li class="rounded-x" data-target="#carousel-example-generic-4" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img alt="" src="{{ static('images/assets/img/main/img20.jpg') }}">
+                            </div>
+                            <div class="item">
+                                <img alt="" src="{{ static('images/assets/img/main/img23.jpg') }}">
+                            </div>
+                            <div class="item">
+                                <img alt="" src="{{ static('images/assets/img/main/img25.jpg') }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-h">
+                        <h3>IT Project Management</h3>
+                        <ul class="list-inline star-vote">
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star"></i></li>
+                            <li><i class="color-green fa fa-star-o"></i></li>
+                        </ul>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><span class="color-green">Position:</span> Project / Program Management</li>
+                        <li><span class="color-green">Required:</span> 2 - years of experience</li>
+                    </ul>
+                    <a class="btn-u btn-u-sm" href="#">View More</a>
+                </div>
+            </div>
+            <!-- End Easy Block -->
+        </div>
+        <!-- End Easy Blocks v1 -->
+
+        <div class="clearfix margin-bottom-20"><hr></div>
+
+
+        <!-- Easy Blocks v2 -->
+        <div class="row">
+            <!-- Begin Easy Block -->
+            <div class="col-md-3 col-sm-6 md-margin-bottom-40">
+                <div class="easy-block-v2">
+                    <div class="easy-bg-v2 rgba-default">New</div>
+                    <img alt="" src="{{ static('images/assets/img/main/img9.jpg') }}">
+                    <h3>UBS Headquarter Zürich</h3>
+                    <ul class="list-unstyled">
+                        <li><span class="color-green">Position:</span> Manager / Executive</li>
+                        <li><span class="color-green">Required:</span> 5 - years of experience</li>
+                        <li><span class="color-green">Gender:</span> Male</li>
+                    </ul>
+                    <a class="btn-u btn-u-sm" href="#">View More</a>
+                </div>
+            </div>
+            <!-- End Begin Easy Block -->
+
+            <!-- Begin Easy Block -->
+            <div class="col-md-3 col-sm-6 md-margin-bottom-40">
+                <div class="easy-block-v2">
+                    <div class="easy-bg-v2 rgba-red">New</div>
+                    <img alt="" src="{{ static('images/assets/img/main/img18.jpg') }}">
+                    <h3>Royal Dutch Shell</h3>
+                    <ul class="list-unstyled">
+                        <li><span class="color-green">Position:</span> Marketing / Advertising</li>
+                        <li><span class="color-green">Required:</span> 7 - years of experience</li>
+                        <li><span class="color-green">Gender:</span> Any</li>
+                    </ul>
+                    <a class="btn-u btn-u-sm" href="#">View More</a>
+                </div>
+            </div>
+            <!-- End Begin Easy Block -->
+
+            <!-- Begin Easy Block -->
+            <div class="col-md-3 col-sm-6 md-margin-bottom-40">
+                <div class="easy-block-v2">
+                    <div class="easy-bg-v2 rgba-blue">New</div>
+                    <img alt="" src="{{ static('images/assets/img/main/img26.jpg') }}">
+                    <h3>University of Warwick</h3>
+                    <ul class="list-unstyled">
+                        <li><span class="color-green">Position:</span> Education / Training</li>
+                        <li><span class="color-green">Required:</span> 10 - years of experience</li>
+                        <li><span class="color-green">Gender:</span> Male</li>
+                    </ul>
+                    <a class="btn-u btn-u-sm" href="#">View More</a>
+                </div>
+            </div>
+            <!-- End Begin Easy Block -->
+
+            <!-- Begin Easy Block -->
+            <div class="col-md-3 col-sm-6">
+                <div class="easy-block-v2">
+                    <div class="easy-bg-v2 rgba-purple">New</div>
+                    <img alt="" src="{{ static('images/assets/img/main/img19.jpg') }}">
+                    <h3>IT Project Management</h3>
+                    <ul class="list-unstyled">
+                        <li><span class="color-green">Position:</span> Project / Program Management</li>
+                        <li><span class="color-green">Required:</span> 2 - years of experience</li>
+                        <li><span class="color-green">Gender:</span> Female</li>
+                    </ul>
+                    <a class="btn-u btn-u-sm" href="#">View More</a>
+                </div>
+            </div>
+            <!-- End Begin Easy Block -->
+        </div>
+        <!-- End Easy Blocks v2 -->
+    {% endblock main %}
+    </div>
+    <!--=== End Content Part ===-->
+
+{% block team %}
+    <!--=== Job Team ===-->
+    <div class="parallax-team parallaxBg">
+        <div class="container content">
+
+            <div class="row">
+                <!-- Team v2 -->
+                <div class="col-md-4 col-sm-12">
+                    <div class="team-v2">
+                        <img class="img-responsive" src="{{ static('images/blocks_1.jpg') }}" alt="" style="max-height: 152px; width: auto; margin: 0 auto;" />
+                        <div class="inner-team">
+                            <h3>Compliance</h3>
+                            <small class="color-green">Supported</small>
+                            <hr>
+                            <p>Private Markets are heavily regulated, and rightly so. We are supported by a number of organisations in London and New York to help us navigate these requirements.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Team v2 -->
+
+                <!-- Team v2 -->
+                <div class="col-md-4 col-sm-12">
+                    <div class="team-v2">
+                        <img class="img-responsive" src="{{ static('images/blocks_2.jpg') }}" alt="" style="max-height: 152px; width: auto; margin: 0 auto;" />
+                        <div class="inner-team">
+                            <h3>London, UK</h3>
+                            <small class="color-green">Fintech Center</small>
+                            <hr>
+                            <p>We are founded by investors looking to solve liquidity problems in London. So we know where you're coming from. We are looking to expand internationally in the future.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Team v2 -->
+
+                <!-- Team v2 -->
+                <div class="col-md-4 col-sm-12">
+                    <div class="team-v2">
+                        <img class="img-responsive" src="{{ static('images/blocks_3.png') }}" alt="" style="max-height: 152px; width: auto; margin: 0 auto;" />
+                        <div class="inner-team">
+                            <h3>Luis Aguilar</h3>
+                            <small class="color-green">SEC Commissioner</small>
+                            <hr>
+                            <p>"The lack of a fair, liquid, and transparent secondary market for these securities is a longstanding problem that needs an effective solution."<br />
+                                - Public Statement 4/3/15</p>
+                            <p.
+                                    This sentiment is echoed by the FCA. Liquidity in private markets is a global issue.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Team v2 -->
+            </div>
+        </div>
+    </div>
+    <!--=== End Job Team ===-->
+{% endblock team %}
+
+{% block partners %}
+    <!--=== Job Partners ===-->
+    <div class="container content job-partners">
+        <div class="title-box-v2">
+            <h2>Our <span class="color-green">Featured</span> Partners</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <ul class="list-inline our-clients" id="effect-2">
+            <li>
+                <figure>
+                    <img src="{{ static('assets/img/clients2/ea-canada.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Ea Canada</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/inspiring.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Inspiring</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="assets/img/clients2/ucweb.png" alt="">
+                    <div class="img-hover">
+                        <h4>UcWeb</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/clarks.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Clarks</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/corepreserves.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Core Preserves</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/finals.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>USL Champions</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/getaround.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>GetAround</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/baderbrau.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Baderbrau</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/emirates.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Emirates</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/fddw.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Field Days</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/district-karaoke.png')}}" alt="">
+                    <div class="img-hover">
+                        <h4>District Karaoke</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/marianos.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Mariano's</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/grifting-tree.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>The Grifting Tree</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/jaguar.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Jaguar</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/hermes.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Hermes</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/starbucks.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Starbucks</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/national-geographic.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>National Geographic</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/much-more.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Much More</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/hotiron.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Hotiron</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/fred-perry.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>Fred Perry</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/bellfield.png')}}" alt="">
+                    <div class="img-hover">
+                        <h4>Bellfield</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/getapp.png') }}" alt="">
+                    <div class="img-hover">
+                        <h4>GetApp</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/austrian-airlines.png')}}" alt="">
+                    <div class="img-hover">
+                        <h4>Austrian Airlines</h4>
+                    </div>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <img src="{{ static('images/assets/img/clients2/general-electric.png')}}" alt="">
+                    <div class="img-hover">
+                        <h4>General Electronic</h4>
+                    </div>
+                </figure>
+            </li>
+        </ul>
+    </div><!--/container-->
+    <!--=== End Job Partners ===-->
+    {% endblock partners %}
+
+    <!--=== Footer Version 3 ===-->
+    <div class="footer-v3">
+        {#<div class="footer">
+            <div class="container">
+                <div class="row">
+                    <!-- About -->
+                    <div class="col-md-3 md-margin-bottom-40">
+                        <p>372, Old Street London, ECIV</br>
+                            9LT, UK<br />
+                            info@liquidround.com
+                        </p>
+                        <p>&copy; LiquidRound</p>
+                    </div><!--/col-md-3-->
+                    <!-- End About -->
+
+                    <div class="col-md-3 md-margin-bottom-40">
+                        &nbsp;
+                    </div><!--/col-md-3-->
+
+                    <div class="col-md-3">
+                        &nbsp;
+                    </div><!--/col-md-3-->
+                </div>
+            </div>
+        </div><!--/footer-->#}
+
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            372, Old Street London, ECIV<br />
+                            9LT, UK<br />
+                            info@liquidround.com
+                            2016 &copy; LiquidRound
+                        </p>
+                    </div>
+                    <!-- Social Links -->
+                    <div class="col-md-6">
+                        <div class="clearfix margin-top-20"></div>
+                        <ul class="social-icons pull-right">
+                            <li><a href="#" data-original-title="Facebook" class="rounded-x social_facebook"></a></li>
+                            <li><a href="#" data-original-title="Twitter" class="rounded-x social_twitter"></a></li>
+                            <li><a href="#" data-original-title="Goole Plus" class="rounded-x social_googleplus"></a></li>
+                            {#<li><a href="#" data-original-title="Linkedin" class="rounded-x social_linkedin"></a></li>
+                            <li><a href="#" data-original-title="Pinterest" class="rounded-x social_pintrest"></a></li>#}
+                        </ul>
+                    </div>
+                    <!-- End Social Links -->
+                </div>
+            </div>
+        </div><!--/copyright-->
+    </div>
+    <!--=== End Footer Version 3 ===-->
+</div><!--/End Wrapepr-->
+{% block modals %}{% endblock %}
+<!-- JS Global Compulsory -->
+{% javascript 'scripts_bottom' %}
+
+<!-- JS Implementing Plugins -->
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        App.init();
+        App.initParallaxBg();
+{#        StyleSwitcher.initStyleSwitcher();#}
+    });
+</script>
+<!--[if lt IE 9]>
+{#    #}
+{#    <script src="assets/plugins/respond.js"></script>#}
+{#    <script src="assets/plugins/html5shiv.js"></script>#}
+{#    <script src="assets/plugins/placeholder-IE-fixes.js"></script>#}
+<![endif]-->
+{% block jss %}{% endblock %}
+</body>
+</html>

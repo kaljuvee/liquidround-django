@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block slider %}
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">{{ page.title }}</h1>
+            <ul class="pull-right breadcrumb">
+                <li><a href="{{ url('statpages:home') }}">Home</a></li>
+                <li class="active">{{ page.title }}</li>
+            </ul>
+        </div><!--/container-->
+    </div><!--/breadcrumbs-->
+{% endblock slider %}
+{% block blurb %}{% endblock %}
+{% block main %}
+    <div class="container content height-500">
+        <div class="row">
+            <div class="col-md-12">
+                {{ page.text|safe }}
+            </div>
+        </div>
+    </div>
+{% endblock main %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}

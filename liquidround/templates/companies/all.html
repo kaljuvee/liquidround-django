@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block slider %}
+    <div class="breadcrumbs-v1">
+        <div class="container">
+            <span>Market For Shares</span>
+            <h1>All Companies</h1>
+        </div>
+    </div>
+{% endblock slider %}
+{% block blurb %}{% endblock %}
+{% block main %}
+    <div class="container content-md">
+    <div class="row">
+        <!-- Blog Sidebar -->
+        <div class="col-md-3">
+            <div class="headline-v2 bg-color-light"><h2>Filters</h2></div>
+            <form action="" method="get" id="filter-form">
+            <!-- Trending -->
+            <ul class="list-unstyled blog-trending margin-bottom-50">
+                <li>
+                    <h3>Company name</h3>
+                    <input type="text" class="form-control" name="title" placeholder="Filter by name">
+                </li>
+                <li>
+                    <h3>Activity</h3>
+                    <label class="checkbox"><input type="checkbox" name="activity[]"  value="equity"> Shares available</label>
+                    <label class="checkbox"><input type="checkbox" name="activity[]" value="offer"> Offers available</label>
+                </li>
+                <li>
+                    <h3>Funding</h3>
+                    <label class="checkbox"><input type="checkbox" name="funding[]"  value="seed"> Seed</label>
+                    <label class="checkbox"><input type="checkbox" name="funding[]"  value="series_a"> Series A</label>
+                    <label class="checkbox"><input type="checkbox" name="funding[]"  value="series_b"> Series B</label>
+                    <label class="checkbox"><input type="checkbox" name="funding[]"  value="series_c"> Series C</label>
+                    <label class="checkbox"><input type="checkbox" name="funding[]"  value="series_d"> Series D</label>
+                </li>
+                <li>
+                    <h3>Industry</h3>
+                    {% for ind in view.industries() %}
+                        <label class="checkbox"><input type="checkbox" name="industry[]"  value="{{ ind.id }}"> {{ ind.title }}</label>
+                    {% endfor %}
+                </li>
+            </ul>
+            <button class="btn btn-u btn-block" type="submit">Apply Filters</button>
+            </form>
+            <!-- End Trending -->
+        </div>
+        <!-- End Blog Sidebar -->
+        <div class="col-md-9">
+            <a href="#" data-toggle="modal" data-target="#request" class="btn btn-u pull-right hidden-xs">Request Listing</a>
+            <div class="visible-xs">
+                <hr>
+                <div class="clearfix margin-top-20"></div>
+                <a href="#" data-toggle="modal" data-target="#request" class="btn btn-u btn-block">Request Listing</a>
+                <div class="clearfix margin-top-20"></div>
+            </div>
+
+            <div class="scroll">
+                {% for company in companies %}
+                    {% with wide=True %}
+                        {% include 'includes/company_home.html'%}
+                    {% endwith %}
+                {% endfor %}
+                {#<div class="clearfix margin-bottom-20"><hr></div>#}
+
+                {% if paginator.num_pages > 1 %}
+                    {% if page_obj.has_next() %}
+                        <a class="js-next-page" href="{{ url('companies:all') }}?page={{ page_obj.next_page_number() }}">Next &rarr;</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block modals %}
+    <div id="request" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <p>If you would like to buy or sell a stock that is not listed on the platform please enter the website of the company here</p>
+
+                    <hr>
+
+                    <form action="" id="js-company-request">
+                        <input type="text" class="form-control" name="company_link" placeholder="E. g. http://liquidround.com/">
+                        <span class="text-danger hidden">Error: URL is not valid</span>
+                        <div class="clearfix margin-bottom-20"></div>
+                        <button type="submit" class="btn btn-u">Request</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block jss %}
+    <script>
+        $(document).ready(function(){
+            $('.scroll').jscroll({
+                loadingHtml: '<img src="loading.gif" alt="Loading" /> Loading...',
+                //padding: 20,
+                nextSelector: 'a.js-next-page',
+                //contentSelector: 'li'
+            });
+
+        });
+    </script>
+{% endblock %}

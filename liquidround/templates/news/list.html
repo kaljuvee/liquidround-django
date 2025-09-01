@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block slider %}
+    <div class="breadcrumbs-v1">
+        <div class="container">
+            <h1>News</h1>
+        </div>
+    </div>
+{% endblock slider %}
+{% block blurb %}{% endblock %}
+{% block main %}
+    <div class="container content-md">
+    <div class="row">
+        <!-- Blog Sidebar -->
+        <div class="col-md-3">
+            <div class="headline-v2 bg-color-light"><h2>Sidebar</h2></div>
+
+            <!-- End Trending -->
+        </div>
+        <!-- End Blog Sidebar -->
+        <div class="col-md-9">
+            <div class="scroll">
+                {% for n in news %}
+                    {% include 'news/includes/_new.html' %}
+                {% endfor %}
+                {#<div class="clearfix margin-bottom-20"><hr></div>#}
+
+                {% if paginator.num_pages > 1 %}
+                    {% if page_obj.has_next() %}
+                        <a class="js-next-page" href="{{ url('news:list') }}?page={{ page_obj.next_page_number() }}">Next &rarr;</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block modals %}{% endblock %}
+{% block jss %}
+    <script>
+        $(document).ready(function(){
+            $('.scroll').jscroll({
+                loadingHtml: '<img src="loading.gif" alt="Loading" /> Loading...',
+                //padding: 20,
+                nextSelector: 'a.js-next-page',
+                //contentSelector: 'li'
+            });
+
+        });
+    </script>
+{% endblock %}

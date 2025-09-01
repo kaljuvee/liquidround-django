@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="{{ static('css/plugins/revolution-slider/rs-plugin/css/settings.css') }}">
+{% endblock %}
+{% block slider %}
+{% if slider %}
+<!--=== Slider ===-->
+    <div class="tp-banner-container">
+        <div class="tp-banner">
+            <ul>
+                {% for slide in slider %}
+                <!-- SLIDE -->
+                <li class="revolution-mch-1" data-transition="fade" data-slotamount="5" data-masterspeed="1000" data-title="Title 1">
+                    <!-- MAIN IMAGE -->
+                    <img src="{{ slide.image.url }}"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+
+                    <div class="tp-caption revolution-ch1 sft start"
+                        data-x="center"
+                        data-hoffset="0"
+                        data-y="100"
+                        data-speed="1500"
+                        data-start="500"
+                        data-easing="Back.easeInOut"
+                        data-endeasing="Power1.easeIn"
+                        data-endspeed="300">
+                        {{ slide.titlle }}
+                    </div>
+                    {% if slide.text %}
+                    <!-- LAYER -->
+                    <div class="tp-caption revolution-ch2 sft"
+                        data-x="center"
+                        data-hoffset="0"
+                        data-y="190"
+                        data-speed="1400"
+                        data-start="2000"
+                        data-easing="Power4.easeOut"
+                        data-endspeed="300"
+                        data-endeasing="Power1.easeIn"
+                        data-captionhidden="off"
+                        style="z-index: 6">
+                        {{ slide.text|safe }}
+                    </div>
+                    {% endif %}
+
+                    {% if slide.link %}
+                    <!-- LAYER -->
+                    <div class="tp-caption sft"
+                        data-x="center"
+                        data-hoffset="0"
+                        data-y="310"
+                        data-speed="1600"
+                        data-start="2800"
+                        data-easing="Power4.easeOut"
+                        data-endspeed="300"
+                        data-endeasing="Power1.easeIn"
+                        data-captionhidden="off"
+                        style="z-index: 6">
+                        <a href="{{ slide.link }}" class="btn-u btn-brd btn-brd-hover btn-u-light">Learn More</a>
+                    </div>
+                    {% endif %}
+                </li>
+                <!-- END SLIDE -->
+                {% endfor %}
+            </ul>
+            <div class="tp-bannertimer tp-bottom"></div>
+        </div>
+    </div>
+    <!--=== End Slider ===-->
+{% endif %}
+{% endblock slider %}
+{% block main %}
+        {#
+        {% if not request.user.profile %}
+        <div class="row title-block">
+            <div class="col-md-12 text-center">
+                <a href="{{ url('accounts:register') }}" class="btn btn-u" role="button">Register Here</a>
+            </div>
+        </div>
+        {% endif %}
+        <hr/>#}
+        <div class="row">
+        {% for company in companies %}
+                {% include 'includes/company_home.html' %}
+        {#<div class="row product">
+            <div class="col-md-2">
+                <a href="{{ url('companies:company',args=[company.slug]) }}">
+                    <img src="http://placehold.it/350x150" class="img-responsive" alt="">
+                </a>
+            </div>
+            <div class="col-md-6">
+                <p><a href="{{ url('companies:company',args=[company.slug]) }}">{{ company.title }}</a></p>
+                <p>{{ company.industry }}</p>
+                <p>{{ company.city }}, {{ company.country }}</p>
+            </div>
+            <div class="col-md-2">
+                <p>Shares Available</p>
+                <span class="glyphicon glyphicon-{% if company.equities %}ok{% else %}remove{% endif %}"></span>
+            </div>
+            <div class="col-md-2">
+                <p>Investor Interest</p>
+                <span class="glyphicon glyphicon-{% if company.offers %}ok{% else %}remove{% endif %}"></span>
+            </div>
+        </div>#}
+        {% endfor %}
+        </div>
+
+        <div class="row text-center">
+            <div class="clearfix margin-bottom-30"></div>
+            <a href="{{ url('companies:all') }}" class="btn btn-u btn-u-green btn-u-lg" role="button">Discover More</a>
+        </div>
+{% endblock main %}
+
+{% block partners %}{% endblock %}
+{% block jss %}
+    <script src="{{ static('js/revolution-slider/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>
+    <script src="{{ static('js/revolution-slider/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
+    <script src="{{ static('js/revolution-slider/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
+    <script src="{{ static('js/revolution-slider.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+           RevolutionSlider.initRSfullWidth();
+        });
+    </script>
+{% endblock jss %}

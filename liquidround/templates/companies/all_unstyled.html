@@ -1,0 +1,10 @@
+{% for company in companies %}
+    {% with wide=True %}
+        {% include 'includes/company_home.html'%}
+    {% endwith %}
+{% endfor %}
+{% if paginator.num_pages > 1 %}
+    {% if page_obj.has_next() %}
+        <a class="js-next-page" href="{{ url('companies:all') }}?page={{ page_obj.next_page_number() }}">Next &rarr;</a>
+    {% endif %}
+{% endif %}

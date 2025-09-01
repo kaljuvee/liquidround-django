@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 buy_offer">
+            {% if form.listing_type.value == 'equity' %}
+            <p>List Equity</p>
+            <!-- <span>Request the listing of a company or list your equity in a currently traded company</span> -->
+            {% else %}
+            <p>Post an Offer</p>
+            {% endif %}
+            <form action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="listing_type" value="{{ form.listing_type.value|default:'equity' }}">
+                <input type="hidden" name="company_id" id="company_id" value="{{ form.company_id.value|default:'' }}">
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-5 first-big">
+                        <div class="form-group {% if form.company.errors %}has-error{% endif %}">
+                            <div class="col-sm-12">
+                                <input type="text" id="companies" class="form-control" placeholder="Enter or Select business" name="company" value="{{ form.company.value|default:'' }}">
+                                {% if form.company.errors %}
+                                    <span class="error-msg">{{ form.company.errors }}</span>
+                                {% endif %}
+                                <p>If your company is already listed the form will be filled automatically</p>
+                            </div>
+                            <div class="form-group {% if form.published.errors %}has-error{% endif %}">
+                                <div class="checkbox" >
+                                    <label>
+                                        <input type="checkbox" name="published" {% if form.published.value %}checked{% endif %}> Publish company
+                                    </label>
+                                    {% if form.published.errors %}
+                                        <span class="error-msg">{{ form.published.errors }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group {% if form.industry.errors %}has-error{% endif %}">
+                            <label for="industry" class="col-sm-4 control-label">Industry:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="industry" placeholder="eg. Consumer Tech" name="industry" value="{{ form.industry.value|default:'' }}">
+                                {% if form.industry.errors %}
+                                    <span class="error-msg">{{ form.industry.errors }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group {% if form.country.errors %}has-error{% endif %}">
+                            <label for="country" class="col-sm-4 control-label">Country:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="country" placeholder="" name="country" value="{{ form.country.value|default:'' }}">
+                                {% if form.country.errors %}
+                                    <span class="error-msg">{{ form.country.errors }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+
+                        
+                    </div>
+                    <div class="col-md-5 col-md-offset-2 first-big">
+                        <div class="form-group {% if form.website.errors %}has-error{% endif %}">
+                            <label for="website" class="col-sm-4 control-label">Website:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="website" placeholder="" name="website" value="{{ form.website.value|default:'' }}">
+                                {% if form.website.errors %}
+                                    <span class="error-msg">{{ form.website.errors }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group {% if form.specificrole.errors %}has-error{% endif %}">
+                            <label for="specificrole" class="col-sm-4 control-label">Specific Role:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="specificrole" placeholder="eg. Ingredient Delivery" name="specificrole" value="{{ form.specificrole.value|default:'' }}">
+                                {% if form.specificrole.errors %}
+                                    <span class="error-msg">{{ form.specificrole.errors }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group {% if form.city.errors %}has-error{% endif %}">
+                            <label for="city" class="col-sm-4 control-label">City:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="city" placeholder="" name="city" value="{{ form.city.value|default:'' }}">
+                                {% if form.city.errors %}
+                                    <span class="error-msg">{{ form.city.errors }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group {% if form.summary.errors %}has-error{% endif %}">
+                            <label for="BusinessSummary" class="col-sm-2 control-label">Business Summary:</label>
+                            <div class="col-sm-8">
+                                <textarea id="summary" name="summary" class="form-control" rows="5">{{ form.summary.value|default:'' }}</textarea>
+                                {% if form.summary.errors %}
+                                    <span class="error-msg">{{ form.summary.errors }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row upload">
+                    <div class="col-md-6">
+                        <div class="images">
+                            
+                        </div>
+
+                        <div class="form-group text-right">
+                            <label for="UploadImages" class="col-sm-6 col-md-offset-1 control-label btn btn-default">Upload Images</label>
+                            <div>
+                                <input type="file" name="images" multiple class="form-control" id="UploadImages" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 documents-section">
+                        <div class="docs text-right">
+                            {% for doc in files %}
+                            <li>
+                                <span class="glyphicon glyphicon-file"></span> <a href="{{ doc.doc.url }}">{{ doc.title }}</a>
+                                | <a href="#" class="remove_doc" data-id="{{ doc.id }}">Delete</a>
+                            </li>
+                            {% endfor %}
+                        </div>
+
+                        <br />
+                        <div class="form-group">
+                            <label class="col-md-3">
+                                Document:
+                            </label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="title[]" placeholder="Document title">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="btn btn-default">
+                                    Choose file
+                                    <input type="file" id="documents" name="docs[]" class="form-control">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <a href="#" class="add_doc">Add more document</a>
+                        </div>
+                        
+                        <p>Include any relevant Shareholder's Agreements, Business Plans or Financials</p>
+
+                        <!-- <div class="form-group">
+                            <label for="UploadFiles" class="col-sm-6 col-md-offset-1 control-label btn btn-default">Upload Files</label>
+                            <div>
+                                <input type="file" class="form-control" id="UploadFiles" placeholder="">
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 check">
+                        <p>Share Details</p>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group {% if form.pre_emption_right.errors %}has-error{% endif %}">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="pre_emption_rights" {% if form.pre_emption_rights.value %}checked{% endif %}> Pre-emption Rights
+                                        </label>
+                                        {% if form.pre_emption_rights.errors %}
+                                            <span class="error-msg">{{ form.pre_emption_rights.errors }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group {% if form.voting_rights.errors %}has-error{% endif %}">
+                                    <div class="checkbox" >
+                                        <label>
+                                            <input type="checkbox" name="voting_rights" {% if form.voting_rights.value %}checked{% endif %}> Voting Rights
+                                        </label>
+                                        {% if form.voting_rights.errors %}
+                                            <span class="error-msg">{{ form.voting_rights.errors }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group {% if form.class_a.errors %}has-error{% endif %}">
+                                    <div class="checkbox" >
+                                        <label>
+                                            <input type="checkbox" name="class_a" {% if form.class_a.value %}checked{% endif %}> Share Class A
+                                        </label>
+                                        {% if form.class_a.errors %}
+                                            <span class="error-msg">{{ form.class_a.errors }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group {% if form.class_b.errors %}has-error{% endif %}">
+                                    <div class="checkbox" >
+                                        <label>
+                                            <input type="checkbox" name="class_b" {% if form.class_b.value %}checked{% endif %}> Share Class A
+                                        </label>
+                                        {% if form.class_b.errors %}
+                                            <span class="error-msg">{{ form.class_b.errors }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group {% if form.funding_stage.errors %}has-error{% endif %}">
+                            <div class="col-sm-5">
+                                <select class="form-control" name="funding_stage">
+                                    <option>Select Current Funding Stage</option>
+                                    <option {% if form.funding_stage.value == 'series_a' %}selected{% endif %} value="series_a">Series A</option>
+                                    <option {% if form.funding_stage.value == 'series_b' %}selected{% endif %} value="series_b">Series B</option>
+                                    <option {% if form.funding_stage.value == 'series_c' %}selected{% endif %} value="series_c">Series C</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-5 first-big">
+                    <div class="form-group {% if form.shares.errors %}has-error{% endif %}">
+                        <label for="SharesWanted" class="col-sm-4 control-label">Shares Wanted:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="SharesWanted" placeholder="" name="shares" value="{{ form.shares.value|default:'' }}">
+                            {% if form.shares.errors %}
+                                <span class="error-msg">{{ form.shares.errors }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-md-5 col-md-offset-2 first-big">
+                    <div class="form-group {% if form.price.errors %}has-error{% endif %}">
+                        <label for="PricePerShare" class="col-sm-4 control-label">Price per share:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="basic-addon1">£</span>
+                              <input type="text" class="form-control" id="PricePerShare" placeholder="00.00" name="price" value="{{ form.price.value|default:'' }}" aria-describedby="basic-addon1">
+                            </div>
+                            {% if form.price.errors %}
+                                <span class="error-msg">{{ form.price.errors }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+{% if form.company_id.value %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($('#company_id').val() != ''){
+            check_company($('#company_id').val());
+        }
+
+        $('body').on('change','#company_id, #industry, #website, #specificrole',function(){
+            $('input').prop('readonly',false);
+        });
+    });
+</script>
+{% endif %}
+{% endblock %}

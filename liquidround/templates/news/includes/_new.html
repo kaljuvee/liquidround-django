@@ -1,0 +1,14 @@
+<div class="row margin-bottom-20">
+    <div class="col-sm-5 sm-margin-bottom-20">
+        <a href="{{ url('news:detail', args=[n.slug]) }}"><img class="img-responsive" src="{{ static('images/assets/img/main/img12.jpg') }}" alt=""></a>
+    </div>
+    <div class="col-sm-7 news-v3">
+        <div class="news-v3-in-sm no-padding">
+            <ul class="list-inline posted-info">
+                <li>{{ n.date|date('d/m/Y') }}</li>
+            </ul>
+            <h2><a href="{{ url('news:detail',args=[n.slug]) }}">{{ n.title }}</a></h2>
+            <p>{{ n.text|safe() }}</p>
+        </div>
+    </div>
+</div>

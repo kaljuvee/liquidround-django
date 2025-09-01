@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 actions">
+                <p>Company Requests</p>
+                <table>
+                    <tr>
+                        <td class="col-md-3"><b>URL</b></td>
+                        <td class="col-md-3">Date Requested</td>
+                        <td class="col-md-3"><b>Status</b></td>
+                    </tr>
+                    {% for r in company_requests %}
+                    <tr>
+                        <td class="col-md-3"><a href="{{ r.url }}" target="_blank">{{ r.url }}</a></td>
+                        <td class="col-md-3">{{ r.createdon|date('d/m/Y') }}</td>
+                        <td class="col-md-3 status">{% if r.done %}Proccessed{% else %}New{% endif %}</td>
+                        <td class="col-md-3">{% if not r.done %}<a href="#" class="js-mark-as-proccessed" data-id="{{ r.id }}">Mark as proccessed</a>{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                    
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

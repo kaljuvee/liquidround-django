@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Liquid Round</title>
+    <meta name="viewport" content="initial-scale=1"/>
+    <link rel="shortcut icon" type="image/ico" href="favicon.ico">
+    {% stylesheet 'styles' %}
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]>
+    <style type="text/css">html,*{filter: none;}</style>
+    <![endif]-->
+</head>
+<body>
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url('statpages:home') }}">LiquidRound</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url('listing:create', args=['equity']) }}">List Shares</a></li>
+                <li><a href="{{ url('listing:create', args=['offer']) }}">List Offer</a></li>
+                <li><a href="{{ url('companies:all') }}">Find A Company</a></li>
+            {% for page in top_menu %}
+                <li>
+                    <a href="{{ url('statpages:page', args=[page.slug]) }}">{{ page.title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated() %}
+                <li class="login">
+                <a href="{{ url('accounts:profile') }}"><span class="glyphicon glyphicon-user"></span>{{ request.user.first_name }} {{ request.user.last_name }}</a>
+                </li>
+                {% if request.user.is_staff %}
+                <li class="login">
+                    <a href="{{ url('admindeck:deck') }}">AdminDeck</a>
+                </li>
+                {% endif %}
+                <li class="login">
+                <a href="{{ url('accounts:logout') }}">Logout</a>
+                </li>
+                {% else %}
+                <li class="login">
+                <a href="{{ url('accounts:login') }}"><span class="glyphicon glyphicon-user"></span>Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<main>
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="image">
+                <img src="http://placehold.it/1900x350" class="img-responsive" alt="">
+            </div>
+        </div>
+
+        
+        <hr/>
+        <div class="row product">
+            <div class="col-md-2">
+                <img src="http://placehold.it/350x150" class="img-responsive" alt="">
+            </div>
+            <div class="col-md-6">
+                <p>Credio</p>
+                <p>Consumer Finance</p>
+                <p>London, UK</p>
+            </div>
+            <div class="col-md-2">
+                <p>Shares Available</p>
+                <span class="glyphicon glyphicon-ok"></span>
+            </div>
+            <div class="col-md-2">
+                <p>Buy Offers</p>
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>
+        </div>
+        <div class="row product">
+            <div class="col-md-2">
+                <img src="http://placehold.it/350x150" class="img-responsive" alt="">
+            </div>
+            <div class="col-md-6">
+                <p>Credio</p>
+                <p>Consumer Finance</p>
+                <p>London, UK</p>
+            </div>
+            <div class="col-md-2">
+                <p>Shares Available</p>
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>
+            <div class="col-md-2">
+                <p>Buy Offers</p>
+                <span class="glyphicon glyphicon-ok"></span>
+            </div>
+        </div>
+        <div class="row text-center">
+            <a href="find_company.html" class="btn btn-default" role="button">View More</a>
+        </div>
+    </div>
+{% endblock %}
+</main>
+{% block modals %}{% endblock %}
+<!-- END out-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% javascript 'scripts_bottom' %}
+{% block extra_js %}{% endblock %}
+</body>
+</html>

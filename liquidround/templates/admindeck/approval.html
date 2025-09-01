@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block main %}
+	<div class="container">
+		<div class="row">
+			{% for listing in listings %}
+			<div class="col-md-12 company">
+				<div class="row">
+					<div class="col-md-2">
+						<img src="http://placehold.it/100x100" class="img-responsive" alt="">
+					</div>
+					<div class="col-md-7">
+						<p>{{ listing.company.title }}</p>
+						<p>{{ listing.company.website }}</p>
+						<p>Share Details - 
+						{% if listing.company.pre_emption_rights %}
+							<span class="badge">Pre-emption</span>
+						{% endif %}
+						{% if listing.company.voting_rights %}
+							<span class="badge">Full Voting Right</span>
+						{% endif %}
+						{% if listing.company.class_a %}
+							<span class="badge">Share Class A</span>
+						{% endif %}
+						{% if listing.company.class_b %}
+							<span class="badge">Share Class B</span>
+						{% endif %}
+						</p>
+
+						<p>Offer - {{ listing.shares }} shares - £{{ listing.price }} per share</p>
+						<div class="files">
+							<p>Business Files</p>
+							{% for doc in listing.company.documents.all()  %}
+							<a href="{{ doc.doc.url }}" title="{{ doc.title }}"><span class="glyphicon glyphicon-file"></span></a>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-md-3 links">
+						<a href="mailto:{{ listing.user.user.email }}">Contact Seller</a>
+						<a href="{{ url('admindeck:edit', args=[listing.id]) }}">Edit Listing</a>
+						<a href="#" class="approve" data-id="{{ listing.id }}">Approve and List</a>
+						<a href="#" class="delete" data-id="{{ listing.id }}">Delete</a>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

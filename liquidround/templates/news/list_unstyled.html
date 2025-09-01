@@ -1,0 +1,8 @@
+{% for n in news %}
+    {% include 'news/includes/_home.html'%}
+{% endfor %}
+{% if paginator.num_pages > 1 %}
+    {% if page_obj.has_next() %}
+        <a class="js-next-page" href="{{ url('news:list') }}?page={{ page_obj.next_page_number() }}">Next &rarr;</a>
+    {% endif %}
+{% endif %}

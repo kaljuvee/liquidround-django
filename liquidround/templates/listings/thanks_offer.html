@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 buy_offer text-center">
+            <p>Offer Successfully Created</p>
+            <span>Your list created and should be approved by administrators</span><br />
+            <a href="{{ url('statpages:home') }}">Home page</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="{{ static('css/page_job_inner1.css') }}">
+{% endblock css %}
+{% block slider %}
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">{{ company.title }}</h1>
+            <ul class="pull-right breadcrumb">
+                <li><a href="{{ url('statpages:home') }}">Home</a></li>
+                <li><a href="{{ url('companies:all') }}">Market for shares</a></li>
+                <li class="active">{{ company.title }}</li>
+            </ul>
+        </div>
+    </div><!--/breadcrumbs-->
+{% endblock %}
+{% block blurb %}{% endblock %}
+{% block main %}
+
+
+
+    <div class="job-description">
+        <div class="container content">
+            <div class="title-box-v2">
+                <h2>Company Porofile</h2>
+            </div>
+            <div class="row">
+                <!-- Left Inner -->
+                <div class="col-md-7">
+                    <div class="left-inner">
+                        <img src="{{ company.logo }}" alt="">
+                        <h3>{{ company.title }}</h3>
+                        <div class="overflow-h">
+                            <p class="hex">{{ company.city }}, {{ company.country }} / {{ company.industry }} / {{ company.role }}</p>
+                            <span><a href="{{ company.website }}" target="_blank">View website</a></span>
+                        </div>
+
+                        <hr>
+
+                        {#<div class="progression">
+                            <span>Revenue</span>
+                            <div class="progress progress-u progress-xs">
+                                <div style="width: 88%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="88" role="progressbar" class="progress-bar progress-bar-u">
+                                </div>
+                            </div>
+
+                            <span>Staff Salaries</span>
+                            <div class="progress progress-u progress-xs">
+                                <div style="width: 76%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="76" role="progressbar" class="progress-bar progress-bar-u">
+                                </div>
+                            </div>
+
+                            <span>Possibility of Dismissial</span>
+                            <div class="progress progress-u progress-xs">
+                                <div style="width: 97%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="97" role="progressbar" class="progress-bar progress-bar-u">
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>#}
+                        <h2>About Company</h2>
+                        {{ company.summary|safe }}
+                        <hr>
+
+                        <h2>Team Description</h2>
+                        {{ company.team_desc|safe }}
+                        <hr>
+
+                    </div>
+                </div>
+                <!-- End Left Inner -->
+
+                <!-- Right Inner -->
+                <div class="col-md-5">
+                    <div class="right-inner">
+
+
+                        <div class="row">
+					<div class="col-xs-6">
+						<a href="{{ url('listing:create', args=['equity']) }}?company={{ company.slug }}" class="btn btn-u">Sell</a>
+					</div>
+					<div class="col-xs-6 text-right">
+						<a href="{{ url('listing:create', args=['offer']) }}?company={{ company.slug }}" class="btn btn-u">Buy</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 equity">
+						{% if equities %}
+						<p>Available Equity</p>
+						{% for e in equities %}
+							<div class="row">
+								<div class="col-md-9">
+									<p><span>{{ e.shares }}</span> shares - £<span>{{ e.price }}</span></p>
+								</div>
+								<div class="col-md-3">
+								{% if request.user.profile != e.user %}
+									{% if e.id in requested %}
+										<small>Requested</small>
+									{% else %}
+									<a href="#" data-toggle="modal" data-target="#request" data-id="{{ e.id }}">Buy</a>
+									{% endif %}
+								{% else %}
+									<small class="muted">(Yours)</small>
+								{% endif %}
+								</div>
+							</div>
+						{% endfor %}
+						{% endif %}
+
+						{% if offers %}
+						<p>Interested investors</p>
+						{% for of in offers %}
+						<div class="row">
+							<div class="col-md-9">
+								<p><span>{{ of.shares }}</span> shares - £<span>{{ of.price }}</span></p>
+							</div>
+							<div class="col-md-3">
+								{% if request.user.profile != of.user %}
+								{% if of.id in requested %}
+									<small>Requested</small>
+								{% else %}
+								<a href="#" data-toggle="modal" data-target="#request" data-id="{{ of.id }}">Contact</a>
+								{% endif %}
+								{% else %}
+								<small>(Yours)</small>
+								{% endif %}
+							</div>
+						</div>
+						{% endfor %}
+						{% endif %}
+					</div>
+				</div>
+				{% if history %}
+				<div class="row">
+					<div class="col-md-12 trade_history">
+						<p>Trade History</p>
+						<table>
+							<thead>
+							<tr>
+								<td>Date</td>
+								<td>Volume</td>
+								<td>Value</td>
+							</tr>
+							</thead>
+							<tbody>
+							{% for h in history %}
+							<tr>
+								<td>{{ h.closedon|date('d/m/y')|default('---') }}</td>
+								<td>{{ h.shares }}</td>
+								<td>£<span>{{ h.price }}</span></td>
+							</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				{% endif %}
+
+
+
+
+                        <hr>
+
+                        <ul class="list-unstyled save-job">
+                            {% for doc in company.documents.all() %}
+                                <li><i class="glyphicon glyphicon-file"></i> <a href="{{ doc.doc.url }}">{{ doc.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+
+                        <hr>
+
+                        <h3>Team</h3>
+                        {% for team in company.team.all() %}
+                            {#<div class="col-md-6">
+                                <span class="glyphicon glyphicon-user"></span>
+                                <p>{{ team.title }}</p>
+                            </div>#}
+                            <div class="people-say margin-bottom-20">
+                                <img src="{{ static('images/assets/img/testimonials/img2.jpg')}}" alt="">
+                                <div class="overflow-h">
+                                    <span>{{ team.title }}</span>
+                                    {#<small class="hex pull-right">5 - hours ago</small>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis varius hendrerit nisl id condimentum.</p>#}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="clearfix"></div>
+                        <hr>
+
+                        <a href="#" class="watch btn btn-u btn-block" data-id="{{ company.id }}">Add to watch list</a>
+                    </div>
+                </div>
+                <!-- End Right Inner -->
+            </div>
+        </div>
+    </div>
+{% endblock main %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block modals %}
+<!-- Modal -->
+<div class="modal fade send_request" id="request" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+				<p>Send Request</p>
+				<div>
+					<p>Once you submit this expression of interest and the other party accepts, your details will be exchanged and you may continue the transaction offline. </p>
+					<p>Please note that any transaction or interaction occuring after this contact is no longer under the jurisdiction of LiquidRound. Remember that investing in private companies carries a number of risks.</p>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="agree"> I Agree to LiquidRound's Terms and Conditions
+					</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" id="listing_id" value="">
+				<button type="button" id="request_contacts" class="btn btn-primary" disabled>Request Contact</button>
+			</div>
+		</div>
+	</div>
+
+{% endblock modals %}

@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block main %}
+	<div class="container">
+		<div class="row profile">
+			<div class="col-md-2 col-md-offset-2">
+				<img src="http://placehold.it/115x115" class="img-responsive" alt="">
+			</div>
+			<div class="col-md-4 infoPeople">
+				<p>{{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+				<p>Contact: {{ profile.user.email }}</p>
+				<a href="{{ url('accounts:edit_profile') }}">Edit</a>
+			</div>
+			<div class="col-md-4 connect">
+				<p>Connect with</p>
+				<div>
+					<a href="#"><img src="{{ static('images/fb.png') }}" alt="fb"/></a>
+					<a href="#"><img src="{{ static('images/in.png') }}" alt="in"/></a>
+					<a href="#"><img src="{{ static('images/tw.png') }}" alt="tw"/></a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div>
+					<ul class="nav nav-tabs" role="tablist">
+						<!-- <li role="presentation"><a href="#CurrentlyHeld" aria-controls="home" role="tab" data-toggle="tab">Currently Held</a></li> -->
+						<li role="presentation" class="active"><a href="#OpenListings" aria-controls="profile" role="tab" data-toggle="tab">Open listings</a></li>
+						<li role="presentation"><a href="#SellHistory" aria-controls="messages" role="tab" data-toggle="tab">Sell History</a></li>
+						<li role="presentation"><a href="#BuyHistory" aria-controls="settings" role="tab" data-toggle="tab">Buy History</a></li>
+						<li role="presentation"><a href="#watching" aria-controls="settings" role="tab" data-toggle="tab">Watching {% if noti_count > 0 %}<span class="red">({{ noti_count }} Change{% if noti_count > 1 %}s{% endif %})</span>{% endif %}</a></li>
+					</ul>
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane currentTable" id="CurrentlyHeld">
+							<p>Current Investments</p>
+							<table>
+								<thead>
+								<tr>
+									<td class="col-md-4">Business</td>
+									<td class="col-md-2">Volume</td>
+									<td class="col-md-2">Price paid</td>
+									<td class="col-md-4">Most recent transaction price</td>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>Business 1</td>
+									<td><span>10,000</span> shares </td>
+									<td>£<span>1.03</span></td>
+									<td>£<span>1.65</span></td>
+								</tr>
+								<tr>
+									<td>Business 1 Business 1 </td>
+									<td><span>10,000</span> shares </td>
+									<td>£<span>1.03</span></td>
+									<td>£<span>1.65</span></td>
+								</tr>
+								<tr>
+									<td>Business 1 Business 1 Business 1</td>
+									<td><span>10,000</span> shares </td>
+									<td>£<span>1.03</span></td>
+									<td>£<span>1.65</span></td>
+								</tr>
+								<tr>
+									<td>Business 1</td>
+									<td><span>10,000</span> shares </td>
+									<td>£<span>1.03</span></td>
+									<td>£<span>1.65</span></td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						<div role="tabpanel" class="tab-pane active openListings" id="OpenListings">
+							{% if equities %}
+							<p>Open Equity Listing</p>
+							<div class="row">
+								<div class="col-md-12">
+									<table>
+										<thead>
+										<tr>
+											<td class="col-md-2">Business</td>
+											<td class="col-md-1">Volume</td>
+											<td class="col-md-1">Sell Offer</td>
+											<td class="col-md-2">Date Posted</td>
+											
+											<td>Status</td>
+											<td class="col-md-2"></td>
+											<td class="col-md-2"></td>
+										</tr>
+										</thead>
+										<tbody>
+										{% for equity in equities %}
+										<tr>
+											<td><a href="{{ url('companies:company', args=[equity.company.slug]) }}">{{ equity.company.title }}</a></td>
+											<td>{{ equity.shares }}</td>
+											<td>£<span>{{ equity.price }}</span></td>
+											<td>{{ equity.createdon|date('d/m/y') }}</td>
+											<td>{% if equity.is_approved %}											<span class="glyphicon glyphicon-ok" title="Approved"></span>											{% else %}<span class="glyphicon glyphicon-hourglass" title="Pending"></span>{% endif %}</td>
+											<td><a href="#" class="delete" data-id="{{ equity.id }}">Remove Listing</a></td>
+											<td>
+											{% if equity.is_approved %}
+											<a href="#" class="sold" data-id="{{ equity.id }}" data-type="equity">Mark as Sold</a><p>(This will update your records)</p>
+											{% endif %}
+											</td>
+										</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+							{% endif %}
+							{% if offers %}
+							<p>Open Requests</p>
+							<div class="row">
+								<div class="col-md-12">
+									<table>
+										<thead>
+										<tr>
+											<td class="col-md-2">Business</td>
+											<td class="col-md-1">Volume</td>
+											<td class="col-md-1">Price Offered</td>
+											<td class="col-md-2">Date Posted</td>
+											
+											<td>Status</td>
+											<td class="col-md-2"></td>
+											<td class="col-md-2"></td>
+										</tr>
+										</thead>
+										<tbody>
+										{% for offer in offers %}
+										<tr>
+											<td><a href="{{ url('companies:company', args=[offer.company.slug]) }}">{{ offer.company.title }}</a></td>
+											<td>{{ offer.shares }}</td>
+											<td>£<span>{{ offer.price }}</span></td>
+											<td>{{ offer.createdon|date('d/m/y') }}</td>
+											
+											<td>{% if offer.is_approved %}											<span class="glyphicon glyphicon-ok" title="Approved"></span>											{% else %}<span class="glyphicon glyphicon-hourglass" title="Pending"></span>{% endif %}</td>
+											<td><a href="#" class="delete" data-id="{{ offer.id }}">Remove Listing</a></td>
+											<td>{% if offer.is_approved %}<a href="#" class="sold" data-id="{{ offer.id }}" data-type="offer">Mark as Bought</a><p>(This will update your records){% endif %}</p></td>
+										</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+							{% endif %}
+						</div>
+						<div role="tabpanel" class="tab-pane" id="SellHistory">
+							<p>Sell History</p>
+							<div class="row">
+								<div class="col-md-12">
+									<table>
+										<thead>
+										<tr>
+											<td class="col-md-6">Business</td>
+											<td class="col-md-2">Volume</td>
+											<td class="col-md-2">Price Sold</td>
+											<td class="col-md-2">Date</td>
+										</tr>
+										</thead>
+										<tbody>
+										{% for selled in sell_history %}
+										<tr>
+											<td>{{ selled.company.title }}</td>
+											<td><span>{{ selled.shares }}</span> shares</td>
+											<td>(£<span>{{ selled.price }})</span></td>
+											<td>{{ selled.closedon|date('d/m/y') }}</td>
+										</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="BuyHistory">
+							<p>Buy History</p>
+							<div class="row">
+								<div class="col-md-12">
+									<table>
+										<thead>
+										<tr>
+											<td class="col-md-6">Business</td>
+											<td class="col-md-2">Volume</td>
+											<td class="col-md-2">Price Paid</td>
+											<td class="col-md-2">Date</td>
+										</tr>
+										</thead>
+										<tbody>
+										{% for buyed in buy_history %}
+										<tr>
+											<td>{{ buyed.company.title }}</td>
+											<td><span>{{ buyed.shares }}</span> shares</td>
+											<td>(£<span>{{ buyed.price }})</span></td>
+											<td>{{ buyed.closedon|date('d/m/y') }}</td>
+										</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div role="tabpanel" class="tab-pane messages" id="watching">
+							<p>Watching companies</p>
+							{% for n in notifications %}
+							<div class="row">
+								<div class="col-md-6">
+									<a href="{{ url('companies:company', args=[n.slug]) }}">{{ n.title }}</a>
+								</div>
+								<div class="col-md-6">
+								{% if n.equities_count or n.offers_count %}
+									<a href="{{ url('companies:company', args=[n.slug]) }}">
+										{% if n.equities_count > 0 and n.offers_count > 0 %}
+											New 
+											{% if n.equities_count > 1 %}
+												Equities
+											{% else %}
+												Equity
+											{% endif %}
+											and 
+
+											{% if n.offers_count > 1 %}
+												Offers
+											{% else %}
+												Offer
+											{% endif %}
+										{% endif %}
+										{% if n.equities_count > 0 and not n.offers_count > 0  %}
+											New
+											{% if n.equities_count > 1 %}
+												Equities
+											{% else %}
+												Equity
+											{% endif %}
+										{% endif %}
+										{% if n.offers_count > 0 and not n.equities_count > 0  %}
+											New
+											{% if n.offers_count > 1 %}
+												Offers
+											{% else %}
+												Offer
+											{% endif %}
+										{% endif %}
+									</a>
+								{% else %}
+									No Update
+								{% endif %}
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock main %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}

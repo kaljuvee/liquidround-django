@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 actions">
+                <p>Users</p>
+                <table>
+                    <tr>
+                        <td class="col-md-8"><b>Name</b></td>
+                        <td class="col-md-2"><b>Email</b></td>
+                        <td class="col-md-2"><b>Role</b></td>
+                    </tr>
+                    {% for user in users %}
+                    <tr>
+                        <td class="col-md-8">{{ user.user.first_name }} {{ user.user.last_name }}</td>
+                        <td class="col-md-2">{{ user.user.email }}</td>
+                        <td class="col-md-2">
+                            {% if user.user.is_staff %}
+                                {% if user.user.is_superuser %}
+                                    Superuser
+                                {% else %}
+                                    Staff
+                                {% endif %}
+                            {% else %}
+                                User
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

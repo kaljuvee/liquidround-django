@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block main %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 actions">
+				<p>Actions</p>
+				<table>
+					<tr>
+						<td class="col-md-8">Registered Sellers Awaiting Approval</td>
+						<td class="col-md-2">{{ equities }}</td>
+						<td class="col-md-2"><a href="{{ url('admindeck:sellers') }}">View</a></td>
+					</tr>
+					<tr>
+						<td class="col-md-8">Registered Buyers Awaiting Approval</td>
+						<td class="col-md-2">{{ offer }}</td>
+						<td class="col-md-2"><a href="{{ url('admindeck:buyers') }}">View</a></td>
+					</tr>
+					<tr>
+						<td class="col-md-8">List of Users</td>
+						<td class="col-md-2">{{ users }}</td>
+						<td class="col-md-8"><a href="{{ url('admindeck:users') }}">View</a></td>
+					</tr>
+					<tr>
+						<td class="col-md-8">List of Documents</td>
+						<td class="col-md-2">{{ documents }}</td>
+						<td class="col-md-8"><a href="{{ url('admindeck:documents') }}">View</a></td>
+					</tr>
+					<tr>
+						<td class="col-md-8">Stats and KPIs</td>
+						<td class="col-md-2">-</td>
+						<td class="col-md-8"><a href="{{ url('admindeck:statistic') }}">View</a></td>
+					</tr>
+
+                    <tr>
+						<td class="col-md-8">Customer Requests</td>
+						<td class="col-md-2">{{ companyrequests }}</td>
+						<td class="col-md-8"><a href="{{ url('admindeck:requests') }}">View</a></td>
+					</tr>
+					
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}

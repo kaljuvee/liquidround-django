@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="{{ static('css/page_log_reg_v1.css') }}">
+{% endblock css%}
+{% block slider %}
+<!--=== Breadcrumbs ===-->
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">Registration</h1>
+            <ul class="pull-right breadcrumb">
+                <li><a href="{{ url('statpages:home') }}">Home</a></li>
+                <li class="active">Login</li>
+            </ul>
+        </div><!--/container-->
+    </div><!--/breadcrumbs-->
+    <!--=== End Breadcrumbs ===-->
+{% endblock slider %}
+{% block blurb %}{% endblock %}
+{% block main %}
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <form class="reg-page" method="POST">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <div class="reg-header">
+                        <h2>Register a new account</h2>
+                        <p>Already Signed Up? Click <a href="{{ url('accounts:login') }}" class="color-green">Sign In</a> to login your account.</p>
+                    </div>
+
+                    {% if form.non_field_errors() %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors() }}
+                        </div>
+                    {% endif %}
+
+                    <label>Full Name <span class="color-red">*</span></label>
+                    <input type="text" class="form-control margin-bottom-20" name="full_name" id="fullName" placeholder="Full Name" value="{{ form.full_name.value()|default_if_none('') }}">
+					{% if form.full_name.errors %}
+						<span class="error-msg">{{ form.full_name.errors }}</span>
+					{% endif %}
+
+                    <label>Phone <span class="color-red">*</span></label>
+                    <input type="text" class="form-control margin-bottom-20" name="phone" id="phoneNumber" placeholder="Phone Number" value="{{ form.phone.value()|default_if_none('') }}">
+					{% if form.phone.errors %}
+						<span class="error-msg">{{ form.phone.errors }}</span>
+					{% endif %}
+
+                    <label>Email Address <span class="color-red">*</span></label>
+                    <input type="email" name="email" class="form-control margin-bottom-20" id="email" placeholder="Email" value="{{ form.email.value()|default_if_none('') }}">
+					{% if form.email.errors %}
+						<span class="error-msg">{{ form.email.errors }}</span>
+					{% endif %}
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Password <span class="color-red">*</span></label>
+                            <input type="password" name="password" class="form-control margin-bottom-20" id="password" placeholder="Password" value="{{ form.password.value()|default_if_none('') }}">
+					{% if form.password.errors %}
+						<span class="error-msg">{{ form.password.errors }}</span>
+					{% endif %}
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Confirm Password <span class="color-red">*</span></label>
+                            <input type="password" name="password_confirm" class="form-control margin-bottom-20" id="confirmPassword" placeholder="Confirm Password" value="{{ form.password_confirm.value()|default_if_none('') }}">
+					{% if form.password_confirm.errors %}
+						<span class="error-msg">{{ form.password_confirm.errors }}</span>
+					{% endif %}
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Subscribers Self-Certification</h3>
+                            <p>To complete registration you must self-certify as either a High Net Worth or Sophisticated Investor</p>
+                            <p>Warning and qualifying details of HNW/Sophisticated Investors to go here</p>
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="radio" name="certified" value="hnwi" {% if form.certified.value() == 'hnwi' %}checked{% endif %}> I certify that I am a High Net Worth Investor
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="radio" name="certified" value="si" {% if form.certified.value() == 'si' %}checked{% endif %}> I certify that I am a qualified Sophisticated Investor
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-lg-6 checkbox">
+                            <label>
+                                <input type="checkbox" name="agree" {% if form.agree.value %}checked{% endif %}>
+                                I agree to the <a href="page_terms.html" class="color-green">terms</a> and recognise that investing in private stocks carries a number of unique risks
+                            </label>
+                            {% if form.agree.errors %}
+                                <span class="error-msg">{{ form.agree.errors }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <button class="btn-u" type="submit">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock main %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}

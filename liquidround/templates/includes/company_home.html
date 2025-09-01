@@ -1,0 +1,30 @@
+<div class="{% if not wide %}col-md-6{% else %}col-md-12{% endif %} shadow-wrapper">
+    <div class="box-shadow shadow-effect-2">
+        <div class="row margin-bottom-20">
+            <div class="col-sm-5 sm-margin-bottom-20">
+                <a href="{{ url('companies:company', args=[company.slug]) }}"><img class="img-responsive" src="{{ company.logo }}" alt=""></a>
+            </div>
+            <div class="col-sm-7 news-v3">
+                <div class="news-v3-in-sm no-padding">
+                    <ul class="list-inline posted-info">
+                        <li>{{ company.city }}, {{ company.country }}</li>
+                        <li>{{ company.industry }}</li>
+                    </ul>
+                    <h2><a href="{{ url('companies:company',args=[company.slug]) }}">{{ company.title }}</a></h2>
+                    {#                <p>Nullam elementum tincidunt massa, a pulvinar leo ultricies ut. Ut fringilla lectus tellus, imperdiet molestie est volutpat at. Sed viverra cursus nibh, sed consectetur ipsum sollicitudin non metus inmi efficitur...</p>#}
+                    <div class="row">
+                        <div class="col-sm-6 text-center">
+                            Listing available:<br /> <i class="icon-custom rounded-x fa fa-{% if company.equities %}check{% else %}times{% endif %}"></i>
+                        </div>
+                        <div class="col-sm-6 text-center">
+                            Shares available: <br/>
+                            <i class="icon-custom rounded-x fa fa-{% if company.offers %}check{% else %}times{% endif %}"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="clearfix margin-bottom-10"></div>
+    </div>
+    <div class="clearfix margin-bottom-30"></div>
+</div>

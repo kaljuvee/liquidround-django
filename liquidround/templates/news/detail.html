@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block slider %}
+    <!--=== Breadcrumbs ===-->
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">News</h1>
+            <ul class="pull-right breadcrumb">
+                <li><a href="{{ url('statpages:home') }}">Home</a></li>
+                <li><a href="{{ url('news:list') }}">News</a></li>
+                <li class="active">{{ object.title }}</li>
+            </ul>
+        </div>
+    </div><!--/breadcrumbs-->
+    <!--=== End Breadcrumbs ===-->
+{% endblock slider %}
+{% block blurb %}{% endblock %}
+{% block main %}
+    <div class="container content blog-page blog-item">
+        <!--Blog Post-->
+        <div class="blog margin-bottom-40">
+            <div class="blog-img">
+                {#<img class="img-responsive" src="assets/img/sliders/4.jpg" alt="">#}
+            </div>
+            <h2><a href="{{ url('news:detail', args=[object.slug]) }}">{{ object.title }}</a></h2>
+            <div class="blog-post-tags">
+                <ul class="list-unstyled list-inline blog-info">
+                    <li><i class="fa fa-calendar"></i> {{ object.date|date('d/m/Y')}}</li>
+                </ul>
+            </div>
+            {{ object.text|safe() }}
+        </div>
+        <!--End Blog Post-->
+
+        <hr>
+    </div>
+    </div>
+{% endblock main%}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}

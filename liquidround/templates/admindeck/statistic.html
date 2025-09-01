@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 actions">
+                <p>Statistic</p>
+                <table>
+                    <tr>
+                        <td class="col-md-8">Users</td>
+                        <td class="col-md-2"></td>
+                        <td class="col-md-2">{{ users }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-8">Active Users</td>
+                        <td class="col-md-2"></td>
+                        <td class="col-md-2">{{ active_users }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-8">Unactive Users</td>
+                        <td class="col-md-2"></td>
+                        <td class="col-md-2">{{ unactive_users }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-8">Traded Companies</td>
+                        <td class="col-md-2"></td>
+                        <td class="col-md-2">{{ company }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-8">Daily Registrations</td>
+                        <td class="col-md-2"></td>
+                        <td class="col-md-2">{{ registrations }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-8">Daily Actions Taken</td>
+                        <td class="col-md-2"></td>
+                        <td class="col-md-2">{{ actions }}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-8">Daily Transactions Completed</td>
+                        <td class="col-md-2"></td>
+                        <td class="col-md-2">{{ transactions }}</td>
+                    </tr>
+                    
+                    
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,58 @@
+#server { 
+#    listen 0.0.0.0:8000;
+#    server_name www.localhost;
+#    return 301 $scheme://localhost:8888$request_uri;
+#}
+
+# А вот тут уже основной конфиг
+server {
+    listen      0.0.0.0:8000;
+#    server_name localhost;
+
+    access_log  /var/log/nginx/mysite_access.log;
+    error_log   /var/log/nginx/mysite_error.log;
+
+    charset utf-8;
+    error_page 403 /errors/404.html;
+    error_page 404 /errors/404.html;
+    error_page 500 /errors/500.html;
+    error_page 502 /errors/502.html;
+
+    recursive_error_pages on;
+
+    
+    location /errors {
+        root /vagrant/wheel/templates/;
+        internal;
+    }
+
+    location = /robots.txt {
+        root /vagrant/wheel/static/;
+    }
+    
+    location = /favicon.ico {
+        root /vagrant/wheel/static/img/;
+    }
+
+    location /static {
+        root /vagrant/wheel/;
+        expires 1d;
+    }
+
+    location /media {
+        root /vagrant/wheel/;
+        expires 1d;
+    }
+
+    location ~* \.(css|js|ico)$ {
+        root /vagrant/wheel/;        
+        gzip_static on;
+        expires 1d;
+    }
+
+    location / {
+        #uwsgi_pass unix:/vagrant/wheel/deploy/var/run/uwsgi.sock;
+	uwsgi_pass 127.0.0.1:10001;
+    }
+
+}

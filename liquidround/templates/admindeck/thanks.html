@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block slider %}{% endblock %}
+{% block blurb %}{% endblock %}
+{% block team %}{% endblock %}
+{% block partners %}{% endblock %}
+{% block main %}
+    <div class="container register">
+        <h2>List saved</h2>
+        <p>
+            <a href="{{ url('statpages:home') }}">Go to home page</a>
+            <a href="{{ url('admindeck:deck') }}">AdminDeck</a>
+            <a href="{{ url('admindeck:sellers') }}">AdminDeck Sellers</a>
+            <a href="{{ url('admindeck:buyers') }}">AdminDeck Buyers</a>
+        </p>
+    </div>
+{% endblock main %}

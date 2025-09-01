@@ -1,0 +1,399 @@
+@charset "utf-8";
+form .form-group.has-error .error-msg {
+  color: #a94442;
+}
+form li {
+  list-style: none;
+}
+.list {
+  padding-top: 100px;
+}
+.list h1 {
+  font-size: 30px;
+  color: #000000;
+  line-height: 45px;
+}
+.list ul li {
+  list-style: disc;
+}
+.register h2 {
+  text-align: center;
+  line-height: 30px;
+}
+.register p {
+  text-align: center;
+  line-height: 25px;
+}
+.register form {
+  margin-top: 50px;
+  display: block;
+  text-align: center;
+}
+.register form .form-group {
+  margin-bottom: 25px;
+}
+.selfCertific {
+  padding: 40px 0;
+}
+.selfCertific p {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.selfCertific form {
+  padding: 80px 0 0 0;
+}
+.selfCertific form .btn {
+  margin: 30px 0 0 100px;
+}
+.login a {
+  position: relative;
+}
+.login a span {
+  font-size: 20px;
+  position: absolute;
+  left: -15px;
+  top: 15px;
+}
+.image {
+  width: 100%;
+}
+.image img {
+  width: 100%;
+}
+.title-block {
+  text-align: center;
+  padding: 30px 0;
+}
+.product {
+  padding-top: 15px;
+  margin-bottom: 15px;
+}
+.product .col-md-2 {
+  text-align: center;
+}
+.product .col-md-2 p {
+  margin-bottom: 20px;
+}
+.product .col-md-2 span:before {
+  font-size: 25px;
+}
+.product img {
+  min-height: 80px;
+  max-height: 85px;
+}
+.filter {
+  position: relative;
+}
+.filter p {
+  font-size: 24px;
+}
+.filter .form-control {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 200px;
+}
+.trade_history {
+  font-style: italic;
+  margin-top: 40px;
+}
+.trade_history p {
+  text-align: center;
+}
+.trade_history table {
+  width: 100%;
+}
+.equity > p {
+  text-align: center;
+  font-weight: 600;
+}
+.equity > div {
+  margin-bottom: 15px;
+}
+.equity > div p {
+  margin-bottom: 0;
+}
+.slider {
+  margin-bottom: 20px;
+}
+.slider img {
+  min-width: 100%;
+}
+.for_icons {
+  margin: 35px -15px 15px;
+}
+.for_icons p {
+  position: relative;
+}
+.for_icons span {
+  font-size: 25px;
+  margin: 0 0 0 2px;
+}
+.info_company > p {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 0;
+}
+.info_company > a {
+  text-align: center;
+  display: block;
+  margin-bottom: 15px;
+}
+.info_company div {
+  margin-top: 20px;
+  display: block;
+}
+.info_company div.mb {
+  margin-bottom: 55px;
+}
+.info_company div p {
+  margin-bottom: 0;
+}
+.info_company div a:not([href="#"]) {
+  display: block;
+  position: relative;
+  text-align: center;
+  line-height: 30px;
+  margin-top: 30px;
+  color: #000000;
+}
+.info_company div a:not([href="#"]) span {
+  position: absolute;
+  left: 50%;
+  top: -20px;
+  margin-left: -12px;
+  font-size: 24px;
+}
+.send_request .modal-body > p {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 30px;
+}
+.send_request .modal-body .checkbox {
+  text-align: center;
+  margin: 15px 0;
+}
+.send_request .modal-footer {
+  text-align: center;
+}
+.buy_offer > p {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 20px 0 0;
+}
+.buy_offer > span {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+}
+.buy_offer form {
+  margin: 50px 0;
+}
+.buy_offer form p {
+  margin: 10px 5px;
+}
+.buy_offer form .form-group {
+  margin-bottom: 30px;
+}
+.buy_offer form .first-big .form-group:first-child {
+  height: 100px;
+}
+.buy_offer form textarea {
+  resize: none;
+}
+.buy_offer form input[type="file"] {
+  display: none;
+}
+.buy_offer form .upload {
+  margin: 20px -15px;
+}
+.buy_offer form .upload label {
+  display: block;
+  text-align: center;
+}
+.buy_offer form .upload p {
+  float: left;
+}
+.buy_offer form .check {
+  margin-bottom: 30px;
+}
+.buy_offer form .check > p {
+  text-align: center;
+  font-weight: 600;
+  margin: 15px 0;
+}
+.about {
+  padding-top: 40px;
+}
+.about ul li {
+  display: block;
+}
+.about ul li a {
+  display: block;
+  line-height: 25px;
+}
+.about .video .title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+}
+.about .video iframe {
+  margin-top: 15px;
+  padding: 0;
+}
+.more_btn {
+  margin: 20px 0;
+}
+.more_btn a:first-child {
+  float: left;
+}
+.more_btn a:last-child {
+  float: right;
+}
+.connect {
+  text-align: center;
+}
+.connect a {
+  display: inline-block;
+}
+.infoPeople {
+  text-align: center;
+}
+.profile {
+  margin: 30px -15px 50px;
+}
+.red {
+  color: red;
+}
+.tab-pane > p {
+  text-align: center;
+  font-size: 16px;
+  margin: 15px 0;
+  font-weight: 600;
+}
+.tab-pane table {
+  width: 100%;
+  margin-bottom: 30px;
+}
+.tab-pane table td {
+  text-align: center;
+  line-height: 25px;
+  padding: 0 5px;
+}
+.tab-pane table tbody tr td:first-child {
+  text-align: left;
+}
+.tab-pane table thead td {
+  font-weight: 600;
+}
+.tab-pane table p {
+  margin-bottom: 0;
+  font-size: 11px;
+}
+.messages p {
+  text-align: left;
+}
+.messages p span {
+  margin-right: 10px;
+}
+.messages .btn {
+  margin: 20px 0;
+}
+.messages table tr td {
+  text-align: left;
+}
+.actions p {
+  font-weight: 600;
+  text-align: left;
+  padding-left: 15px;
+  margin: 20px 0;
+}
+.actions table {
+  width: 100%;
+}
+.actions table td {
+  line-height: 25px;
+}
+.for_response {
+  margin: 30px -15px;
+}
+.response {
+  padding: 15px;
+}
+.response p {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+.response a {
+  display: inline-block;
+  margin: 0 10px;
+}
+.company {
+  border-top: 1px solid #cccccc;
+  padding: 10px 15px;
+  margin-top: 15px;
+}
+.company:first-child {
+  border-top: none;
+}
+.company p {
+  margin-bottom: 0;
+}
+.company .links a {
+  display: block;
+  text-align: right;
+  line-height: 35px;
+}
+.company .files p {
+  display: inline-block;
+  margin-right: 15px;
+}
+.company .files a {
+  display: inline-block;
+  margin: 0 5px;
+}
+.company .files a span {
+  font-size: 25px;
+  position: relative;
+  top: 6px;
+  color: #000000;
+}
+.modal-header {
+  border-bottom: none;
+}
+.autocomplete-suggestions {
+  border: 1px solid #999;
+  background: #FFF;
+  cursor: default;
+  overflow: auto;
+  -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+  -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+  box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
+}
+.autocomplete-suggestion {
+  padding: 2px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.autocomplete-no-suggestion {
+  padding: 2px 5px;
+}
+.autocomplete-selected {
+  background: #F0F0F0;
+}
+.autocomplete-suggestions strong {
+  font-weight: bold;
+  color: #000;
+}
+.autocomplete-group {
+  padding: 2px 5px;
+}
+.autocomplete-group strong {
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+  display: block;
+  border-bottom: 1px solid #000;
+}
