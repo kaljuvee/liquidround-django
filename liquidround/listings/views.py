@@ -2,7 +2,7 @@ import json
 import datetime 
 from django.utils import timezone
 from django.http import Http404, HttpResponse
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.text import slugify
 # Create your views here.
 from django.views import generic

@@ -98,7 +98,7 @@ class RegisterForm(MyUserForm):
         email = cleaned_data.get("email")
         agree = cleaned_data.get("agree")
 
-        print agree
+        print(agree)
         if email:
             check = models.Profile.objects.filter(user__email__iexact=email)
             if check.count() > 0:

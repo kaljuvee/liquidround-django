@@ -14,7 +14,7 @@ from companies.models import Company
 
 
 class Home(TopMenu, TemplateView):
-    template_name = "home.html"
+    template_name = "simple_home.html"
 
     def get_context_data(self, **kwargs):
         context = super(Home, self).get_context_data(**kwargs)

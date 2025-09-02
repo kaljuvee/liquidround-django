@@ -3,7 +3,7 @@ import datetime
 
 from django.shortcuts import render, redirect
 from django.http import Http404
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView
 from django.views.generic import DetailView
@@ -69,7 +69,7 @@ class RegisterActivation(statpages_mixins.TopMenu,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(RegisterActivation, self).get_context_data(**kwargs)
-        print kwargs['code']
+        print(kwargs)['code']
         try:
             user = models.Profile.objects.get(activationcode=kwargs['code'])
         except:
@@ -167,7 +167,7 @@ class Profile(statpages_mixins.TopMenu, DetailView):
         
 
         
-        print context['notifications']
+        print(context)['notifications']
 
         return context
 

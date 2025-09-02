@@ -3,7 +3,7 @@ import datetime
 
 from django.http import Http404, HttpResponse
 from django.utils import timezone
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.core.files import File
 
 from django.views import generic
@@ -246,7 +246,7 @@ class ApproveListing(accounts_mixins.StaffOnly,
                     raise Http404
 
                 listing.is_approved = True
-                print timezone.now
+                print(timezone.now)
                 listing.approvedon = timezone.now()
                 listing.expireson = timezone.now() + datetime.timedelta(days=60)
                 listing.save()

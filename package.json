@@ -1,0 +1,27 @@
+{
+  "name": "liquidround-django",
+  "version": "1.0.0",
+  "description": "Before install ensure, that your locale settings was properly installed. The problem described here - https://www.digitalocean.com/community/questions/language-problem-on-ubuntu-14-04 If you have the same, put the following text into `/etc/default/locale`",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "tailwindcss -i ./liquidround/core/static/css/src/tailwind.css -o ./liquidround/core/static/css/tailwind.css --watch",
+    "build-css-prod": "tailwindcss -i ./liquidround/core/static/css/src/tailwind.css -o ./liquidround/core/static/css/tailwind.css --minify",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaljuvee/liquidround-django.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaljuvee/liquidround-django/issues"
+  },
+  "homepage": "https://github.com/kaljuvee/liquidround-django#readme",
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "tailwindcss": "^4.1.12"
+  }
+}

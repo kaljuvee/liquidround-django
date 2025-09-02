@@ -1,16 +1,16 @@
-Django==1.9.1
-Jinja2==2.8
-MarkupSafe==0.23
-Pillow==2.9.0
-django-appconf==1.0.1
-django-imagekit==3.3
-django-jinja==2.1.1
-django-jinja-middleware==2.0.1
-django-pipeline==1.6.4
-django-resized==0.3.5
-django-wysiwyg-redactor==0.4.9
-futures==3.0.4
-pilkit==1.1.13
-psycopg2==2.4.5
-six==1.10.0
-uWSGI==2.0.11.1
+# Latest Django and dependencies
+Django
+Pillow
+django-imagekit
+django-jinja
+django-pipeline
+django-resized
+Jinja2
+MarkupSafe
+six
+
+# Additional modern packages
+django-cors-headers
+python-decouple
+whitenoise
+

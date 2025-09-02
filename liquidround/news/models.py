@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.text import slugify
-from redactor.fields import RedactorField
+# from redactor.fields import RedactorField
 from django.utils import timezone
 
 
@@ -11,9 +11,9 @@ class News(models.Model):
     date = models.DateField(default=timezone.now)
     slug = models.SlugField(blank=True)
     published = models.BooleanField(default=True)
-    text = RedactorField(upload_to='pages/', max_length=4294967295, blank=True, null=True)
+    text = models.TextField(max_length=4294967295, blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self):
